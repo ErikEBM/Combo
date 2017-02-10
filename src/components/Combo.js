@@ -1,40 +1,27 @@
 import React from "react";
 
+        const desabilitado = {
+                backgroundColor: 'lightgrey',
+                color: '#a1a2a2',
+                
+            }
 
-class Combo extends React.Component {
-    constructor(){
-        super()
-        this.state = {
-            data : []
-        }
-    }
-    
-    componentDidMount(){
-        let ambito = this;
-
-        fetch("http://192.168.0.17/~vimcemt/inventario/public/index.php/departamentos").then(function(response){
-            
-            return response.json().then(function(json){
-                    
-                    ambito.setState({
-                        data: json
-                    });
-            });
-
-        }).catch(function(err){
-            console.log("error");
-        });
-    }
-
-    render(){
+const Combo = (props)  =>  {
+   
+        
 
 
-        return(
+         let desabilitar = (props.data.length === 0) ? desabilitado : {};
+
+        
+
+        return (
                 <div>
-                    <select name="" id="">
+                    <select name="" id="" style={desabilitar}>
                         
                         <option value="">seleccionar</option>
-                        { this.state.data.map( (e, i) => {
+                        { props.data.map( (e, i) => {
+
                             return <option key={i + "key"}>{e.nombre}</option> 
                         } )}
                     
@@ -42,8 +29,11 @@ class Combo extends React.Component {
                 </div>
 
         )
-    }
+    
 }
 
+Combo.defaultProps = {
+    data : []
+}
 
 export default Combo;
